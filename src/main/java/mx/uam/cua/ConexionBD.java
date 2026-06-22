@@ -20,6 +20,10 @@ public class ConexionBD {
         this.password = password;
     }
 
+    public Connection getConexion() {
+        return conexion;
+    }
+
     private String generateStringConnection(String ip, String port, String db){
         StringBuilder str = new StringBuilder();
         str.append("jdbc:mysql://");
@@ -32,17 +36,22 @@ public class ConexionBD {
         return str.toString();
     }
 
-    public Connection conectar(){
+    public void conectar(){
         this.conexion = null;
         try {
             String stringConnection = generateStringConnection(this.ip, this.port, this.db);
-            conexion = DriverManager.getConnection(stringConnection, this.user, this.password);
+            this.conexion = DriverManager.getConnection(stringConnection, this.user, this.password);
         } catch (SQLException e) {
             System.err.println("Error al conectar con la base de datos");
         }
-        return conexion;
     }
     public void desconectar(){
-
+        if(this.conexion != null){
+            try {
+                this.conexion.close();
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
     }
 }
