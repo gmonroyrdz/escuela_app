@@ -1,5 +1,6 @@
 package mx.uam.cua;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -64,4 +65,27 @@ public class ControladorQueries {
             }
         }
     }
+
+    public void getEstudiantesByCurso(String curso){
+        try {
+            this.conexion.conectar();
+            String query = "SELECT e.nombre, e.apellido, c.nombre as 'nombre del curso' FROM estudiantes e INNER JOIN inscripciones i ON e.id = i.id_estudiante INNER JOIN cursos c ON c.id = i.id_curso WHERE c.nombre = ?";
+            PreparedStatement preparedQuery = this.conexion.getConexion().prepareStatement(query);
+            preparedQuery.setString(1, curso);
+            ResultSet resultado = preparedQuery.executeQuery();
+
+            while (resultado.next()) {
+                String nombre = resultado.getString("nombre");
+                String apellido = resultado.getString("apellido");
+                String nombreCurso = resultado.getString("nombre del curso");
+                System.out.println(nombre + " " + apellido + " - Curso: " + nombreCurso);
+            }
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
 }
+
