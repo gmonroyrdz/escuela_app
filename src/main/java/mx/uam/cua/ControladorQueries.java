@@ -87,5 +87,29 @@ public class ControladorQueries {
         }
     }
 
+    public void getProfesorByCurso(String nombre, String apellido){
+        try {
+            this.conexion.conectar();
+            String query = "SELECT p.nombre, p.apellido, c.nombre as 'nombre del curso' FROM profesores p INNER JOIN cursos c ON c.id_profesor = p.id WHERE p.nombre=? AND p.apellido=?";
+            PreparedStatement preparedQuery = this.conexion.getConexion().prepareStatement(query);
+            preparedQuery.setString(1, nombre);
+            preparedQuery.setString(2, apellido);
+        
+
+            ResultSet resultado = preparedQuery.executeQuery();
+
+            while (resultado.next()) {
+                String nombre1 = resultado.getString("nombre");
+                String apellido1 = resultado.getString("apellido");
+                String nombreCurso = resultado.getString("nombre del curso");
+                System.out.println(nombre1 + " " + apellido + " - Curso: " + nombreCurso);
+            }
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
 }
 
