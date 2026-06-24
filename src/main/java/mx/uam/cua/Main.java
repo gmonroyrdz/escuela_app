@@ -14,7 +14,7 @@ public class Main {
 
         controller.getEstudiantesByCurso("Álgebra");
 
-        controller.getProfesorByCurso("Predo", "Martínez");
+        controller.getProfesorByName("Predo", "Martínez");
 
 
 

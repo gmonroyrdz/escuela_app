@@ -87,7 +87,7 @@ public class ControladorQueries {
         }
     }
 
-    public void getProfesorByCurso(String nombre, String apellido){
+    public void getProfesorByName(String nombre, String apellido){
         try {
             this.conexion.conectar();
             String query = "SELECT p.nombre, p.apellido, c.nombre as 'nombre del curso' FROM profesores p INNER JOIN cursos c ON c.id_profesor = p.id WHERE p.nombre=? AND p.apellido=?";
